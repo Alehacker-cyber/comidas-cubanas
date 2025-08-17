@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
-db = SQLAlchemy()
+db = SQLAlchemy()  # ✅ Esto debe ir antes de cualquier uso de db
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,4 +15,3 @@ class Order(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
