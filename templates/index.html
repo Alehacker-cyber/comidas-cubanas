@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Comidas Cubanas</title>
+    <meta charset="UTF-8">
+    <title>Comidas Cubanas 🍽️</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #d62828;
+        }
+        .btn {
+            padding: 15px 30px;
+            background-color: #f77f00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #d62828;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bienvenido a Comidas Cubanas</h1>
-    <a href="{{ url_for('login') }}">Entrar</a>
+    <h1>Bienvenido a Comidas Cubanas 🇨🇺</h1>
+    <p>Sabores que te transportan a La Habana</p>
+    <a href="{{ url_for('login') }}"><button class="btn">Entrar al menú</button></a>
 </body>
 </html>
