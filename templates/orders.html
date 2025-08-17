@@ -1,0 +1,9 @@
+<h2>Mis órdenes</h2>
+<ul>
+    {% for order in orders %}
+    <li>
+        <strong>{{ order.dish }}</strong> — {{ order.quantity }} unidad(es)<br>
+        <em>{{ order.notes }}</em>
+    </li>
+    {% endfor %}
+</ul>
