@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from models import db, User  # Importa la instancia db y el modelo User
+from models import db, User, Order
+db.init_app(app)
 
 app = Flask(__name__)
 
@@ -41,3 +42,4 @@ except ImportError:
 # Ejecuta localmente con debug
 if __name__ == '__main__':
     app.run(debug=True)
+
