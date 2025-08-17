@@ -2,21 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+from models import db, User  # ✅ importa la instancia db y el modelo User
+
 app = Flask(__name__)
 
-# ✅ Define la configuración directamente
+# Configuración directa
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'I love my mom'
 
-from models import db, User
-db.init_app(app)
+db.init_app(app)  # ✅ inicializa la instancia importada
 
-db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-from models import *
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 from routes import *
 
 @app.route('/set_language', methods=['POST'])
@@ -31,4 +34,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
