@@ -1,28 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from models import db, User, Order
-db.init_app(app)
 
+# ✅ Crea la instancia de Flask primero
 app = Flask(__name__)
 
-# Configuración directa
+# ✅ Configura la app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'I love my mom'
 
-# Inicializa extensiones
+# ✅ Importa e inicializa extensiones después de crear app
+from models import db, User, Order
 db.init_app(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-# Define cómo cargar un usuario desde su ID
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Rutas principales
+# ✅ Define rutas después de inicializar todo
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -33,13 +32,12 @@ def set_language():
     session['lang'] = lang
     return redirect(request.referrer or url_for('index'))
 
-# Importa rutas adicionales (si tienes más en routes.py)
+# ✅ Importa rutas adicionales al final
 try:
     import routes
 except ImportError:
-    pass  # Evita errores si aún no has creado routes.py
+    pass
 
-# Ejecuta localmente con debug
+# ✅ Ejecuta localmente
 if __name__ == '__main__':
     app.run(debug=True)
-
