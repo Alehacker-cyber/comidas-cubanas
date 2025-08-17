@@ -15,3 +15,11 @@ class Order(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Dish(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    price = db.Column(db.Float)
+    image_url = db.Column(db.String(200))  # URL o ruta local
+
