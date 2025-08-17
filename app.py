@@ -23,5 +23,9 @@ def set_language():
     session['lang'] = lang
     return redirect(request.referrer or url_for('index'))
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 
