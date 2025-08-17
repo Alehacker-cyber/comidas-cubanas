@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user
 from models import User, Order, db
 
-routes = Blueprint('routes', __name__)
+routes = Blueprint('routes', __login__)
 
 @routes.route('/login', methods=['GET', 'POST'])
 def login():
