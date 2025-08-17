@@ -1,12 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
-db = SQLAlchemy()  # ✅ Esto debe ir antes de cualquier uso de db
+db = SQLAlchemy()
 
-class Dish(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text)
-    price = db.Column(db.Float)
-    image_url = db.Column(db.String(200))  # URL o ruta local
-
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+    role = db.Column(db.String(10))  # 'admin' o 'cliente'
