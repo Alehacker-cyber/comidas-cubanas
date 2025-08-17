@@ -1,0 +1,12 @@
+from app import app, db
+from models import User
+
+with app.app_context():
+    db.create_all()
+    if not User.query.filter_by(username='admin').first():
+        user = User(username='admin', password='Alejandro.1028', role='admin')
+        db.session.add(user)
+        db.session.commit()
+        print("✅ Usuario admin creado.")
+    else:
+        print("ℹ️ El usuario admin ya existe.")
