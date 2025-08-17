@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
 
+# ✅ Define la configuración directamente
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'I love my mom'
 
 db = SQLAlchemy(app)
@@ -14,9 +15,6 @@ login_manager.login_view = 'login'
 
 from models import *
 from routes import *
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 @app.route('/set_language', methods=['POST'])
 def set_language():
@@ -28,6 +26,5 @@ def set_language():
 def index():
     return render_template('index.html')
 
-
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
