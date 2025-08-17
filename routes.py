@@ -36,3 +36,26 @@ def order():
         flash('¡Orden enviada con éxito!')
         return redirect(url_for('routes.dashboard'))
     return render_template('order.html')
+@routes.route('/admin/dishes')
+@login_required
+def manage_dishes():
+    if current_user.role != 'admin':
+        return redirect(url_for('routes.dashboard'))
+    dishes = Dish.query.all()
+    return render_template('manage_dishes.html', dishes=dishes)
+
+@routes.route('/admin/dishes/edit/<int:dish_id>', methods=['GET', 'POST'])
+@login_required
+def edit_dish(dish_id):
+    if current_user.role != 'admin':
+        return redirect(url_for('routes.dashboard'))
+    dish = Dish.query.get_or_404(dish_id)
+    if request.method == 'POST':
+        dish.name = request.form['name']
+        dish.description = request.form['description']
+        dish.price = float(request.form['price'])
+        dish.image_url = request.form['image_url']
+        db.session.commit()
+        flash('Plato actualizado')
+        return redirect(url_for('routes.manage_dishes'))
+    return render_template('edit_dish.html', dish=dish)
