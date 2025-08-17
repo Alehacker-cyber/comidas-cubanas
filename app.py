@@ -13,12 +13,6 @@ app.secret_key = 'I love my mom'
 
 db.init_app(app)  # ✅ inicializa la instancia importada
 
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
 from routes import *
 
 @app.route('/set_language', methods=['POST'])
@@ -33,5 +27,6 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
