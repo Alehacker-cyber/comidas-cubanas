@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user
-from models import User, Order, db
+from models import User, Order, Dish, db
 
-routes = Blueprint('routes', __login__)
+routes = Blueprint('routes', __name__)
 
 @routes.route('/login', methods=['GET', 'POST'])
 def login():
