@@ -1,7 +1,10 @@
-from models import Order, db
-from flask_login import current_user
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required, login_user, logout_user, current_user
+from models import User, Order, db
 
-@app.route('/order', methods=['GET', 'POST'])
+routes = Blueprint('routes', __name__)
+
+@routes.route('/order', methods=['GET', 'POST'])
 @login_required
 def order():
     if request.method == 'POST':
@@ -12,11 +15,11 @@ def order():
         db.session.add(new_order)
         db.session.commit()
         flash('¡Orden enviada con éxito!')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('routes.dashboard'))
     return render_template('order.html')
 
-@app.route('/orders')
+@routes.route('/dashboard')
 @login_required
-def orders():
-    user_orders = Order.query.filter_by(user_id=current_user.id).all()
-    return render_template('orders.html', orders=user_orders)
+def dashboard():
+    orders = Order.query.filter_by(user_id=current_user.id).all()
+    return render_template('dashboard.html', orders=orders)
