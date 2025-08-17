@@ -1,28 +1,22 @@
-from flask import request, redirect, url_for, render_template, flash
-from flask_login import login_user, logout_user, login_required
-from models import User
-from app import app
+from models import Order, db
+from flask_login import current_user
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/order', methods=['GET', 'POST'])
+@login_required
+def order():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
-            login_user(user)
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Credenciales incorrectas')
-    return render_template('login.html')
+        dish = request.form['dish']
+        quantity = int(request.form['quantity'])
+        notes = request.form.get('notes')
+        new_order = Order(dish=dish, quantity=quantity, notes=notes, user_id=current_user.id)
+        db.session.add(new_order)
+        db.session.commit()
+        flash('¡Orden enviada con éxito!')
+        return redirect(url_for('dashboard'))
+    return render_template('order.html')
 
-@app.route('/dashboard')
+@app.route('/orders')
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
+def orders():
+    user_orders = Order.query.filter_by(user_id=current_user.id).all()
+    return render_template('orders.html', orders=user_orders)
