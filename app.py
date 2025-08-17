@@ -9,6 +9,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'I love my mom'
 
+from models import db, User
+db.init_app(app)
+
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -28,3 +31,4 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
