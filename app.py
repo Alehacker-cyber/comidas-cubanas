@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from routes import routes
+app.register_blueprint(routes)
 
 # ✅ Crea la instancia de Flask primero
 app = Flask(__name__)
@@ -41,3 +43,4 @@ except ImportError:
 # ✅ Ejecuta localmente
 if __name__ == '__main__':
     app.run(debug=True)
+
