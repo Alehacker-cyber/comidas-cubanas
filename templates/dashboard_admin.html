@@ -1,0 +1,7 @@
+@routes.route('/admin/dashboard')
+@login_required
+def admin_dashboard():
+    if current_user.role != 'admin':
+        return redirect(url_for('routes.dashboard'))
+    orders = Order.query.all()
+    return render_template('admin_dashboard.html', orders=orders)
