@@ -5,6 +5,8 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+app.secret_key = 'I love my mom'
+
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -19,3 +21,5 @@ def set_language():
     lang = request.form.get('language')
     session['lang'] = lang
     return redirect(request.referrer or url_for('index'))
+
+
